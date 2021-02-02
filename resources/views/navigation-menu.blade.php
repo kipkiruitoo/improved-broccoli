@@ -17,13 +17,18 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('cases.index') }}" :active="request()->routeIs('cases.index')">
+                    <x-jet-nav-link href="{{ route('cases.index') }}" :active="request()->routeIs('cases.*')">
                         {{ __('Cases') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('laws.index') }}" :active="request()->routeIs('laws.index')">
+                    <x-jet-nav-link href="{{ route('laws.index') }}" :active="request()->routeIs('laws.*')">
                         {{ __('Laws') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('laws.index') }}" :active="request()->routeIs('user.*')">
+                        {{ __('User Management') }}
                     </x-jet-nav-link>
                 </div>
             </div>
