@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LawCase extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        'title', 'number', 'citation', 'court', 'law', 'judges', 'judgementdate', 'file_location'
+    ];
 }

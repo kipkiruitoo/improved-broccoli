@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Law extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'volume',
+        'chapter',
+        'file_location'
+
+    ];
 }

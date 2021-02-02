@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCaseRequest;
+use App\Http\Requests\UpdateCaseRequest;
+use App\Models\LawCase;
 use Illuminate\Http\Request;
+// use PhpParser\Node\Stmt\Case_;
 
 class CaseController extends Controller
 {
@@ -13,7 +17,9 @@ class CaseController extends Controller
      */
     public function index()
     {
-        //
+        $cases = LawCase::paginate(15);
+
+        return view('cases.index', compact('cases'));
     }
 
     /**
@@ -23,7 +29,7 @@ class CaseController extends Controller
      */
     public function create()
     {
-        //
+        return view('cases.create');
     }
 
     /**
@@ -32,9 +38,12 @@ class CaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCaseRequest $request)
     {
         //
+        LawCase::create($request->validated());
+
+        return redirect()->route('cases.index');
     }
 
     /**
@@ -43,9 +52,10 @@ class CaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(LawCase $case)
     {
         //
+        return view('laws.show', compact('case'));
     }
 
     /**
@@ -54,9 +64,9 @@ class CaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(LawCase $case)
     {
-        //
+        return view('cases.edit', compact('case'));
     }
 
     /**
@@ -66,9 +76,11 @@ class CaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCaseRequest $request, LawCase $case)
     {
-        //
+        $case->update($request->validated());
+
+        return redirect()->route('cases.show', $case);
     }
 
     /**
@@ -77,8 +89,10 @@ class CaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(LawCase $case)
     {
-        //
+
+        $case->delete();
+        return redirect()->route('cases.index');
     }
 }
