@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CaseController;
+use App\Http\Controllers\LawController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +22,8 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+Route::resource('cases', CaseController::class);
+
+Route::resource('laws', LawController::class);
