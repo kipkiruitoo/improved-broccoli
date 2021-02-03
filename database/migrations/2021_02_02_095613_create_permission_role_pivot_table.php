@@ -26,6 +26,6 @@ class CreatePermissionRolePivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission_role_pivot');
+        Schema::dropIfExists('permission_role');
     }
 }
