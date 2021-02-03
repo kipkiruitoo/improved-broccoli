@@ -4,6 +4,7 @@ use App\Http\Controllers\CaseController;
 use App\Http\Controllers\LawController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware('auth');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -30,3 +31,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('laws', LawController::class);
     Route::resource('users', UserController::class);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
+
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
+	 Route::get('map', function () {return view('pages.maps');})->name('map');
+	 Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
+	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+});
+
